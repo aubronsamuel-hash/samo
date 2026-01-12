@@ -359,15 +359,13 @@ Comparatif:
 
 ---
 
-## Statut d'Implémentation
-**Phase Actuelle :** Phase 1 - Foundation (BUILD ACTIVE)
+## Roadmap & Status
+**Phase status :**
+- ✅ **Phase 1 : Backend Foundation** (Completed). Core API, Auth, Conflict Engine.
+- 🏗️ **Phase 2 : Manager Dashboard - Web** (Active). Next.js, Tailwind, Planning Interface.
+- 📅 **Phase 3 : Technician App - Mobile** (Pending).
 
-**Mandat d'exécution :**
-Le développement du MVP est autorisé pour valider techniquement le moteur de conflits et l'API.
-
-**Portée Autorisée (Authorized Scope) :**
-1.  **Backend Core :** Développement de l'API FastAPI (`app/`), Modèles de données (SQLAlchemy) et Logique métier.
-2.  **Domaines Prioritaires :** Gestion des Shifts, Profils Utilisateurs, Moteur de Conflits v1.
-3.  **Infrastructure locale :** Configuration de l'environnement de dév (Docker, Env vars).
+**Authorized Scope :**
+Les agents sont autorisés à modifier : `backend/` (Maintenance) et `frontend/` (Création).
 
 **Objectif Code :** Livrer une API fonctionnelle supportant les flux définis dans `api_specs.md` et `data_models.md`.

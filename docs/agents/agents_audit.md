@@ -15,6 +15,8 @@ Authority: README.md is the single product truth.
 - Offline-first synchronization rules and conflict handling for mobile.
 - Reputation scoring inputs, dispute handling, and pricing rules for the marketplace.
 - Financial accounting assumptions (taxes, overtime rules, cost attribution).
+- Technology stack decisions (backend, mobile, auth provider, database, cache).
+- API auth token format and rate-limiting thresholds.
 
 ## What cannot be safely implemented yet
 - Any application code or feature details not explicitly defined in README.md.

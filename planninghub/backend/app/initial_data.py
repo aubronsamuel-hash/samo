@@ -151,7 +151,7 @@ def _get_or_create_shift(
         status=ShiftStatus.CONFIRMED,
         priority=ShiftPriority.MEDIUM,
         conflicts=[],
-        metadata={"technical_rider": "2x monitors"},
+        meta_data={"technical_rider": "2x monitors"},
     )
     db.add(shift)
     db.commit()

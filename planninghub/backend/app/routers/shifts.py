@@ -61,10 +61,10 @@ async def create_shift(
         shift_data.end_time,
     )
 
-    payload = shift_data.model_dump(mode="json", exclude={"metadata"})
+    payload = shift_data.model_dump(mode="json", exclude={"meta_data"})
     new_shift = Shift(
         **payload,
-        metadata=shift_data.metadata.model_dump(mode="json") if shift_data.metadata else {},
+        meta_data=shift_data.meta_data.model_dump(mode="json") if shift_data.meta_data else {},
         created_by=current_user.id,
         status=ShiftStatus.CONFIRMED,
         conflicts=conflicts,

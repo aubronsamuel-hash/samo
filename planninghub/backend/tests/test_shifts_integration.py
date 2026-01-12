@@ -35,7 +35,7 @@ def test_create_shift_success(
             "breakdown": {"labor_cost": 405, "equipment_cost": 500},
         },
         "priority": "high",
-        "metadata": {
+        "meta_data": {
             "technical_rider": "https://s3.example.com/rider.pdf",
             "stage_plot": "https://s3.example.com/plot.svg",
         },

@@ -96,6 +96,7 @@ async def list_event_shifts(
     return [
         ShiftResponse(
             id=shift.id,
+            event_id=shift.event_id,
             status=shift.status.value,
             conflicts=shift.conflicts or [],
             warnings=[],

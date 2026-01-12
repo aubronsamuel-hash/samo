@@ -122,6 +122,7 @@ class WarningItem(BaseModel):
 
 class ShiftResponse(BaseModel):
     id: UUID
+    event_id: UUID
     status: str
     conflicts: List[ConflictItem] = []
     warnings: List[WarningItem] = []

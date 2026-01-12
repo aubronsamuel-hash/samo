@@ -6,27 +6,19 @@ Authority: README.md is the single product truth.
 This audit maps README.md concepts to the documented roadmap and the current repo layout. It records gaps and decisions required before implementation work can proceed.
 
 ## Repo state summary
-- Only governance and documentation are present.
-- No application code folders exist at this time.
+- Governance and documentation: Phase 1 complete.
+- Application code: Initialization authorized. `app/` folder creation in progress.
+- Status: **BUILD PHASE ACTIVE**.
 
 ## Mapping: README concepts -> roadmap/specs -> code folders
+- Backend Core: `app/main.py`, `app/models.py` (Authorized)
+- API Routes: `app/routers/` (Authorized)
+- Domain Logic: `app/services/` (Authorized)
 
-| README concept | Roadmap reference in README.md | Spec/roadmap docs | Code folders |
-| --- | --- | --- | --- |
-| Identity and Access Management (IAM) | Phase 1: core identity and auth | None found | None present |
-| Time and Reservation Engine | Phase 1: time engine + basic conflicts | None found | None present |
-| Conflict Detection and Resolution Engine | Phase 1: basic conflicts; Phase 2: advanced conflict resolution | None found | None present |
-| Resource and Matching Intelligence Engine | Phase 1: simple matching; Phase 3: AI matching engine | None found | None present |
-| Execution and Timesheet Engine | Phase 2: timesheet and execution engine | None found | None present |
-| Financial Intelligence Engine | Phase 1: basic finance tracking | None found | None present |
-| Automation and Intelligence Layer | Phase 3: automation workflows | None found | None present |
-| Marketplace and Trust Engine | Phase 2: marketplace MVP; Phase 4: white label marketplace | None found | None present |
-| Notification and Communication Engine | Phase 3: advanced notifications | None found | None present |
-| Analytics and Business Intelligence | Phase 2: analytics dashboard; Phase 3: predictive analytics | None found | None present |
-| Mobile first experience | Phase 1: mobile planning | None found | None present |
-| Security and Compliance Framework | Phase 4: advanced security; global compliance | None found | None present |
-| Integration and Ecosystem | Phase 2: integration API; Phase 4: ecosystem partnerships | None found | None present |
-| Multi organization scale | Phase 4: multi organization scale | None found | None present |
+## Execution Plan (Code Implementation)
+1. **Iteration 4 (Current)**: Initialize FastAPI skeleton, Database models (User/Shift/Equipment), and Core Shift API based on `api_specs.md`.
+2. Iteration 5: Implement Auth0 integration, User profiles endpoint, and Equipment availability logic.
+3. Iteration 6: Implement Conflict Detection Engine v1 and basic caching (Redis).
 
 ## Gaps
 - No implementation specs, data models, or API definitions are present.

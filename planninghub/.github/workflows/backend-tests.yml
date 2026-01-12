@@ -1,11 +1,13 @@
-name: Backend Tests
+name: Backend CI
 
 on:
   push:
+    branches: [main, develop]
     paths:
       - "planninghub/backend/**"
       - "planninghub/.github/workflows/backend-tests.yml"
   pull_request:
+    branches: [main]
     paths:
       - "planninghub/backend/**"
       - "planninghub/.github/workflows/backend-tests.yml"
@@ -13,18 +15,46 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: planninghub/backend
+    services:
+      postgres:
+        image: postgres:15
+        env:
+          POSTGRES_PASSWORD: testpass
+          POSTGRES_DB: planninghub_test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - uses: actions/checkout@v4
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: "3.10"
+          python-version: "3.11"
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
       - name: Install dependencies
         run: |
+          cd planninghub/backend
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-      - name: Run tests
-        run: pytest tests/ --cov=app
+      - name: Run tests with coverage
+        env:
+          DATABASE_URL: postgresql://postgres:testpass@localhost:5432/planninghub_test
+          AUTH0_DOMAIN: "test.auth0.com"
+          AUTH0_API_AUDIENCE: "https://api.planninghub.test"
+          AUTH0_ALGORITHMS: "RS256"
+        run: |
+          cd planninghub/backend
+          pytest tests/ --cov=app --cov-report=xml --cov-report=term-missing
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v4
+        with:
+          files: ./planninghub/backend/coverage.xml
+          fail_ci_if_error: false

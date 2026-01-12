@@ -41,7 +41,7 @@ def client(db_session):
             pass
 
     def override_get_current_user():
-        return {"sub": str(uuid4())}
+        return {"sub": str(uuid4()), "role": "planner"}
 
     app.dependency_overrides[get_db] = override_get_db
     app.dependency_overrides[get_current_user] = override_get_current_user

@@ -1,10 +1,9 @@
-from uuid import UUID
-
-from fastapi import APIRouter, Depends, HTTPException, Header, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
+from ..auth.dependencies import get_current_user
 from ..database import get_db
-from ..models import Shift, ShiftPriority, ShiftStatus
+from ..models import Shift, ShiftPriority, ShiftStatus, User
 from ..schemas import ShiftCreate, ShiftResponse
 from ..services.conflict_detector import detect_conflicts
 
@@ -21,14 +20,8 @@ def _calculate_theoretical_value(base_rate: float, start_time, end_time) -> floa
 async def create_shift(
     shift_data: ShiftCreate,
     db: Session = Depends(get_db),
-    x_user_id: UUID | None = Header(default=None, alias="X-User-ID"),
+    current_user: User = Depends(get_current_user),
 ):
-    if x_user_id is None:
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail="Missing X-User-ID header",
-        )
-
     conflicts, warnings = detect_conflicts(db, shift_data)
     critical_conflicts = [c for c in conflicts if c["severity"] == "critical"]
     if critical_conflicts:
@@ -52,7 +45,7 @@ async def create_shift(
     new_shift = Shift(
         **payload,
         metadata=shift_data.metadata.model_dump(mode="json") if shift_data.metadata else {},
-        created_by=x_user_id,
+        created_by=current_user.id,
         status=ShiftStatus.CONFIRMED,
         conflicts=conflicts,
         economic_value=economic_value,

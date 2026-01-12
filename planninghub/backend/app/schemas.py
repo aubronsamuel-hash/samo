@@ -1,8 +1,8 @@
 from datetime import datetime
-from typing import Dict, List, Optional
+from typing import Any, Dict, List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, EmailStr, Field, model_validator
+from pydantic import BaseModel, EmailStr, Field, RootModel, model_validator
 
 
 class UserBase(BaseModel):
@@ -11,6 +11,36 @@ class UserBase(BaseModel):
     roles: List[str] = []
     first_name: Optional[str] = None
     last_name: Optional[str] = None
+
+
+class UserProfile(BaseModel):
+    id: UUID
+    email: EmailStr
+    phone: Optional[str] = None
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
+    roles: List[str] = []
+    specializations: List[Dict[str, Any]] = []
+    availability: Dict[str, List[str]] = {}
+    employment_contract: Dict[str, Any] = {}
+
+    model_config = {"from_attributes": True}
+
+
+class AvailabilityPayload(RootModel[Dict[str, Optional[List[str]]]]):
+    pass
+
+
+class AvailabilityWarning(BaseModel):
+    date: str
+    message: str
+    severity: str
+
+
+class AvailabilityUpdateResponse(BaseModel):
+    status: str
+    availability: Dict[str, List[str]]
+    warnings: List[AvailabilityWarning] = []
 
 
 class BreakTime(BaseModel):

@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 
-from .routers import equipment, shifts
+from .routers import equipment, shifts, users
 
 app = FastAPI(title="PlanningHub API", version="v1")
 
@@ -22,6 +22,7 @@ async def validation_exception_handler(
 
 app.include_router(shifts.router)
 app.include_router(equipment.router)
+app.include_router(users.router)
 
 
 @app.get("/health")

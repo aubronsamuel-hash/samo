@@ -1,18 +1,17 @@
-from uuid import uuid4
-
 from fastapi.testclient import TestClient
 
 
-def test_equipment_conflict_warning(client: TestClient):
-    equip_id = str(uuid4())
+def test_equipment_conflict_warning(
+    client: TestClient, test_event, test_equipment
+):
     base_payload = {
         "title": "Shift 1",
-        "event_id": str(uuid4()),
+        "event_id": str(test_event.id),
         "call_time": "2024-02-15T16:00:00Z",
         "start_time": "2024-02-15T18:00:00Z",
         "end_time": "2024-02-15T23:00:00Z",
         "resources": [
-            {"id": equip_id, "type": "equipment", "role": "mixing_console"}
+            {"id": str(test_equipment.id), "type": "equipment", "role": "mixing_console"}
         ],
         "economic_value": {
             "base_rate": 45,
@@ -32,5 +31,5 @@ def test_equipment_conflict_warning(client: TestClient):
     }
 
     response = client.post("/shifts/", json=overlapping)
-    assert response.status_code == 201
-    assert response.json()["warnings"][0]["code"] == "EQUIPMENT_UNAVAILABLE"
+    assert response.status_code == 409
+    assert response.json()["detail"]["code"] == "RESOURCE_CONFLICT"

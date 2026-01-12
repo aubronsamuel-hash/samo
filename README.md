@@ -359,14 +359,15 @@ Comparatif:
 
 ---
 
-## Validation et prochaine etape
+## Statut d'Implémentation
+**Phase Actuelle :** Phase 1 - Foundation (BUILD ACTIVE)
 
-Prochaines actions:
+**Mandat d'exécution :**
+Le développement du MVP est autorisé pour valider techniquement le moteur de conflits et l'API.
 
-1. Prototype conflict engine (2 weeks)
-2. Validation avec 5 experts (1 week)
-3. Pitch deck investisseurs (1 week)
-4. Recrutement CTO or lead dev
+**Portée Autorisée (Authorized Scope) :**
+1.  **Backend Core :** Développement de l'API FastAPI (`app/`), Modèles de données (SQLAlchemy) et Logique métier.
+2.  **Domaines Prioritaires :** Gestion des Shifts, Profils Utilisateurs, Moteur de Conflits v1.
+3.  **Infrastructure locale :** Configuration de l'environnement de dév (Docker, Env vars).
 
-Verdict:
-PlanningHub v1.2 est prete pour l execution.
+**Objectif Code :** Livrer une API fonctionnelle supportant les flux définis dans `api_specs.md` et `data_models.md`.

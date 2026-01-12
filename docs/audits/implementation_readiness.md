@@ -39,6 +39,6 @@ This audit maps README.md concepts to the documented roadmap and the current rep
 - Define financial accounting assumptions tied to the Financial Intelligence Engine.
 
 ## Ordered plan for the next 3 iterations (docs only)
-1. Iteration 1: Create a Phase 1 scope brief that lists MVP capabilities, non-goals, and success metrics, all traced to README.md sections.
-2. Iteration 2: Draft a data model glossary for core entities (user, membership, shift, budget, timesheet) with required fields and lifecycle states.
-3. Iteration 3: Draft API, workflow, and integration specs covering endpoints, event triggers, mobile offline rules, and notification expectations for Phase 1 and Phase 2.
+1. Iteration 10: Frontend Initialization (CORS, Types, Axios Client).
+2. Iteration 11: Auth Pages (Login with JWT).
+3. Iteration 12: Event & Shift Dashboard.

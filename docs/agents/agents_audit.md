@@ -11,6 +11,10 @@ Authority: README.md is the single product truth.
 - Exact API definitions and integration protocols beyond named systems.
 - Detailed UX flows for each workflow state and conflict resolution path.
 - Legal jurisdiction specifics for labor law enforcement.
+- Target vertical for the Phase 1 MVP.
+- Offline-first synchronization rules and conflict handling for mobile.
+- Reputation scoring inputs, dispute handling, and pricing rules for the marketplace.
+- Financial accounting assumptions (taxes, overtime rules, cost attribution).
 
 ## What cannot be safely implemented yet
 - Any application code or feature details not explicitly defined in README.md.

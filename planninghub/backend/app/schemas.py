@@ -1,9 +1,9 @@
-from datetime import datetime
+from datetime import date, datetime
 from enum import Enum
 from typing import Any, Dict, List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, EmailStr, Field, RootModel, model_validator
+from pydantic import AliasChoices, BaseModel, EmailStr, Field, RootModel, model_validator
 
 
 class UserBase(BaseModel):
@@ -176,3 +176,90 @@ class EquipmentResponse(BaseModel):
 class EquipmentListResponse(BaseModel):
     count: int
     results: List[EquipmentResponse]
+
+
+class VenueContact(BaseModel):
+    name: Optional[str] = None
+    email: Optional[EmailStr] = None
+    phone: Optional[str] = None
+
+
+class Venue(BaseModel):
+    name: str
+    address: str
+    capacity: Optional[int] = None
+    contact: Optional[VenueContact] = Field(
+        default=None,
+        validation_alias=AliasChoices("contact", "technical_contact"),
+        serialization_alias="contact",
+    )
+
+
+class SoundRequirements(BaseModel):
+    main_system: Optional[str] = None
+    monitors: Optional[int] = None
+    mixing_consoles: List[str] = []
+
+
+class LightingRequirements(BaseModel):
+    moving_lights: Optional[int] = None
+    led_pars: Optional[int] = None
+    lighting_desks: List[str] = []
+
+
+class PowerRequirements(BaseModel):
+    total_power_needed: Optional[float] = None
+    distros_required: Optional[int] = None
+
+
+class TechnicalRequirements(BaseModel):
+    sound: Optional[SoundRequirements] = None
+    lighting: Optional[LightingRequirements] = None
+    power: Optional[PowerRequirements] = None
+
+
+class BudgetBreakdown(BaseModel):
+    sound: Optional[float] = None
+    lighting: Optional[float] = None
+    video: Optional[float] = None
+    labor: Optional[float] = None
+    transport: Optional[float] = None
+
+
+class Budget(BaseModel):
+    total: float
+    breakdown: Optional[BudgetBreakdown] = None
+
+
+class EventCreate(BaseModel):
+    name: str = Field(..., min_length=3, max_length=200)
+    description: Optional[str] = Field(default=None, max_length=2000)
+    start_date: date
+    end_date: date
+    venue: Venue
+    technical_requirements: Optional[TechnicalRequirements] = None
+    budget: Optional[Budget] = None
+    status: str = "planning"
+
+    @model_validator(mode="after")
+    def validate_dates(self):
+        if self.end_date < self.start_date:
+            raise ValueError("end_date doit etre apres start_date")
+        return self
+
+
+class EventResponse(BaseModel):
+    id: UUID
+    name: str
+    description: Optional[str] = None
+    start_date: date
+    end_date: date
+    venue: Dict[str, Any]
+    technical_requirements: Dict[str, Any]
+    budget: Dict[str, Any]
+    status: str
+    created_by: UUID
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}

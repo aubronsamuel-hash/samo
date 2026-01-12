@@ -32,6 +32,9 @@ This audit maps README.md concepts to the documented roadmap and the current rep
 - No implementation specs, data models, or API definitions are present.
 - No documentation maps roadmap phases to required data schemas, workflows, or compliance rules.
 - No codebase exists to verify folder ownership or module boundaries.
+- Mobile offline-first sync rules and conflict handling are not specified.
+- Marketplace reputation, dispute handling, and pricing rules are not documented.
+- Financial accounting assumptions (taxes, overtime, cost attribution) are undefined.
 
 ## Decisions required
 - Confirm the target vertical for Phase 1 MVP.
@@ -39,8 +42,11 @@ This audit maps README.md concepts to the documented roadmap and the current rep
 - Specify API boundaries and integration protocols for named systems.
 - Define UX flows for workflow states and conflict resolution paths.
 - Confirm compliance scope by region and industry standards.
+- Define mobile offline-first sync rules and conflict resolution approach.
+- Define marketplace reputation inputs, dispute rules, and pricing model details.
+- Define financial accounting assumptions tied to the Financial Intelligence Engine.
 
 ## Ordered plan for the next 3 iterations (docs only)
 1. Iteration 1: Create a Phase 1 scope brief that lists MVP capabilities, non-goals, and success metrics, all traced to README.md sections.
 2. Iteration 2: Draft a data model glossary for core entities (user, membership, shift, budget, timesheet) with required fields and lifecycle states.
-3. Iteration 3: Draft an integration and workflow spec covering API surface, event triggers, and notification expectations for Phase 1 and Phase 2.
+3. Iteration 3: Draft API, workflow, and integration specs covering endpoints, event triggers, mobile offline rules, and notification expectations for Phase 1 and Phase 2.

@@ -2,7 +2,15 @@ from datetime import datetime
 from typing import Dict, List, Optional
 from uuid import UUID
 
-from pydantic import BaseModel, Field, model_validator
+from pydantic import BaseModel, EmailStr, Field, model_validator
+
+
+class UserBase(BaseModel):
+    email: EmailStr
+    phone: Optional[str] = None
+    roles: List[str] = []
+    first_name: Optional[str] = None
+    last_name: Optional[str] = None
 
 
 class BreakTime(BaseModel):
@@ -29,8 +37,8 @@ class EconomicValueBreakdown(BaseModel):
 
 class EconomicValue(BaseModel):
     base_rate: float
-    total_amount: float
     budget_line: str
+    total_amount: Optional[float] = None
     equipment_rate: Optional[float] = None
     breakdown: Optional[EconomicValueBreakdown] = None
 

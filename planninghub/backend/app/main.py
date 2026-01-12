@@ -1,8 +1,24 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.exceptions import RequestValidationError
+from fastapi.responses import JSONResponse
 
 from .routers import equipment, shifts
 
 app = FastAPI(title="PlanningHub API", version="v1")
+
+
+@app.exception_handler(RequestValidationError)
+async def validation_exception_handler(
+    request: Request, exc: RequestValidationError
+) -> JSONResponse:
+    return JSONResponse(
+        status_code=422,
+        content={
+            "code": "VALIDATION_ERROR",
+            "detail": exc.errors(),
+        },
+    )
+
 
 app.include_router(shifts.router)
 app.include_router(equipment.router)

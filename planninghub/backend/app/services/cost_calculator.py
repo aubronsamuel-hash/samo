@@ -1,6 +1,6 @@
 from typing import Dict
 
-from ..schemas.shift import ShiftCreate
+from ..schemas import ShiftCreate
 
 
 def calculate_costs(shift_data: ShiftCreate) -> Dict:

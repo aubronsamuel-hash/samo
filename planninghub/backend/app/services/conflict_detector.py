@@ -4,8 +4,8 @@ from uuid import UUID
 
 from sqlalchemy.orm import Session
 
-from ..models.shift import Shift
-from ..schemas.shift import ShiftCreate
+from ..models import Shift
+from ..schemas import ShiftCreate
 
 TOLERANCE = timedelta(minutes=15)
 

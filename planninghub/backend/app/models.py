@@ -99,7 +99,7 @@ class Shift(Base):
     status = Column(SQLEnum(ShiftStatus), default=ShiftStatus.DRAFT)
     priority = Column(SQLEnum(ShiftPriority), default=ShiftPriority.MEDIUM)
     conflicts = Column(JSON, default=list)
-    metadata = Column(JSON, default=dict)
+    meta_data = Column(JSON, default=dict)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())
     version = Column(Integer, default=1)

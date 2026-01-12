@@ -91,7 +91,7 @@ class ShiftCreate(BaseModel):
     resources: List[ResourceItem]
     economic_value: EconomicValue
     priority: str = "medium"
-    metadata: Optional[ShiftMetadata] = None
+    meta_data: Optional[ShiftMetadata] = None
 
     @model_validator(mode="after")
     def validate_times(self):

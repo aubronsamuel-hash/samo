@@ -3,7 +3,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
-from ..auth.dependencies import get_current_user
+from ..auth.dependencies import get_current_user, require_role
 from ..database import get_db
 from ..models.shift import Shift, ShiftPriority
 from ..schemas.shift import ShiftCreate, ShiftResponse
@@ -28,7 +28,12 @@ def _extract_user_id(payload: dict) -> UUID:
         ) from exc
 
 
-@router.post("/", response_model=ShiftResponse, status_code=status.HTTP_201_CREATED)
+@router.post(
+    "/",
+    response_model=ShiftResponse,
+    status_code=status.HTTP_201_CREATED,
+    dependencies=[Depends(require_role("planner"))],
+)
 async def create_shift(
     shift_data: ShiftCreate,
     db: Session = Depends(get_db),

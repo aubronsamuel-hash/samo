@@ -3,6 +3,7 @@ from typing import Any, Dict
 
 import httpx
 from jose import jwt
+from jose.exceptions import JWTError
 
 from ..config import settings
 
@@ -26,10 +27,13 @@ def decode_token(token: str) -> Dict[str, Any]:
     key = next((k for k in jwks.get("keys", []) if k.get("kid") == kid), None)
     if not key:
         raise ValueError("Signing key not found")
-    return jwt.decode(
-        token,
-        key,
-        algorithms=[settings.auth0_algorithms],
-        audience=settings.auth0_api_audience,
-        issuer=f"https://{settings.auth0_domain}/",
-    )
+    try:
+        return jwt.decode(
+            token,
+            key,
+            algorithms=[settings.auth0_algorithms],
+            audience=settings.auth0_api_audience,
+            issuer=f"https://{settings.auth0_domain}/",
+        )
+    except JWTError as exc:
+        raise ValueError("Invalid token") from exc

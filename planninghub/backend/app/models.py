@@ -29,6 +29,13 @@ class ShiftPriority(str, enum.Enum):
     CRITICAL = "critical"
 
 
+class EquipmentStatus(str, enum.Enum):
+    AVAILABLE = "available"
+    BOOKED = "booked"
+    MAINTENANCE = "maintenance"
+    BROKEN = "broken"
+
+
 class User(Base):
     __tablename__ = "users"
 
@@ -55,11 +62,14 @@ class Equipment(Base):
     name = Column(String, nullable=False)
     category = Column(String, nullable=False)
     subcategory = Column(String, nullable=False)
+    status = Column(SQLEnum(EquipmentStatus), default=EquipmentStatus.AVAILABLE)
     quantity = Column(Integer, default=1)
     location = Column(JSON, default=dict)
     availability = Column(JSON, default=list)
     specifications = Column(JSON, default=dict)
     maintenance = Column(JSON, default=dict)
+    maintenance_log = Column(JSON, default=list)
+    license_required = Column(String, nullable=True)
     organization_id = Column(UUID(as_uuid=True), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
     updated_at = Column(DateTime(timezone=True), onupdate=func.now())

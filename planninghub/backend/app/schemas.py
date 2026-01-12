@@ -1,4 +1,5 @@
 from datetime import datetime
+from enum import Enum
 from typing import Any, Dict, List, Optional
 from uuid import UUID
 
@@ -109,7 +110,7 @@ class ShiftCreate(BaseModel):
 class ConflictItem(BaseModel):
     resource_id: UUID
     resource_type: str
-    shift_id: UUID
+    shift_id: Optional[UUID] = None
     severity: str
 
 
@@ -129,3 +130,49 @@ class ShiftResponse(BaseModel):
     version: int
 
     model_config = {"from_attributes": True}
+
+
+class EquipmentStatus(str, Enum):
+    AVAILABLE = "available"
+    BOOKED = "booked"
+    MAINTENANCE = "maintenance"
+    BROKEN = "broken"
+
+
+class EquipmentCreate(BaseModel):
+    name: str = Field(..., min_length=2, max_length=100)
+    category: str
+    subcategory: str
+    status: EquipmentStatus = EquipmentStatus.AVAILABLE
+    quantity: int = Field(default=1, ge=1)
+    location: Dict[str, Any] = {}
+    availability: List[Dict[str, Any]] = []
+    specifications: Dict[str, Any] = {}
+    maintenance: Dict[str, Any] = {}
+    maintenance_log: List[Dict[str, Any]] = []
+    license_required: Optional[str] = None
+
+
+class EquipmentResponse(BaseModel):
+    id: UUID
+    name: str
+    category: str
+    subcategory: str
+    status: EquipmentStatus
+    quantity: int
+    location: Dict[str, Any]
+    availability: List[Dict[str, Any]]
+    specifications: Dict[str, Any]
+    maintenance: Dict[str, Any]
+    maintenance_log: List[Dict[str, Any]]
+    license_required: Optional[str] = None
+    organization_id: UUID
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+    model_config = {"from_attributes": True}
+
+
+class EquipmentListResponse(BaseModel):
+    count: int
+    results: List[EquipmentResponse]

@@ -30,6 +30,7 @@ Codex is an implementation agent. It translates README.md intent into enforceabl
 ## Escalation rules
 - If any stop condition triggers, escalate to repository owner with a written summary.
 - Escalation must reference README.md as the source of truth.
+- **Exception** : Les modifications des règles de scope (README/AGENT.md) peuvent être proposées directement via PR, sans escalade préalable.
 
 ## Audit and traceability
 - Every governance file must reference README.md as authority.

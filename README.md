@@ -366,6 +366,6 @@ Comparatif:
 - 📅 **Phase 3 : Technician App - Mobile** (Pending).
 
 **Authorized Scope :**
-Les agents sont autorisés à modifier : `backend/` (Maintenance) et `frontend/` (Création).
+Les agents sont autorisés dans les dossiers : `backend/`, `frontend/`, `planninghub/`, `docs/`.
 
 **Objectif Code :** Livrer une API fonctionnelle supportant les flux définis dans `api_specs.md` et `data_models.md`.
